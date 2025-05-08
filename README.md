@@ -1,1 +1,197 @@
 ## Guition-ESP32S3-8M-PSRAM-16M-FLASH-5-inch-IPS-800-480-
+Teclado Táctil Virtual para Pantalla TFT 800x480
+Este proyecto escolar implementa un teclado táctil virtual de 4x3 teclas en una pantalla TFT RGB de 800x480 (JC8048W550C_I) usando un ESP32 y la biblioteca Arduino_GFX_Library. Fue un prototipo para aprender a configurar la pantalla y el controlador táctil GT911, y para identificar parámetros estables que eliminaron el parpadeo (rebote) en proyectos posteriores.
+Descripción
+El proyecto muestra un teclado virtual con teclas numéricas (0-9, *, #) que cambian de color (azul a verde) al ser presionadas. Soporta hasta 5 toques simultáneos gracias al controlador GT911. Fue un paso clave para entender la sincronización de la pantalla (pclk, hsync, vsync) y optimizar la fuente de alimentación, logrando estabilidad en pruebas de 20 minutos con cables USB largos.
+Características
+
+Teclado virtual: 4 filas x 3 columnas con teclas 1-9, 0, *, #.
+Soporte multitáctil: Detecta hasta 5 toques simultáneos.
+Interfaz gráfica: Teclas rectangulares con esquinas redondeadas, color azul (reposo) y verde (presionado).
+Estabilidad: Sin parpadeo gracias a pclk = 15 MHz y fuente USB estable (≥2A).
+Frecuencia: Actualización táctil cada 40 ms (~25 Hz).
+
+Requisitos
+Hardware
+
+Placa: ESP32 (por ejemplo, ESP32-S3 Dev Module).
+Pantalla: TFT RGB 800x480 (JC8048W550C_I, controlador probable: ILI9488).
+Controlador táctil: TAMC_GT911.
+Fuente de alimentación: USB (5V, ≥2A), probado con cables cortos y largos.
+Cables: USB de calidad para minimizar interferencias.
+
+Software
+
+Arduino IDE: Versión 2.x o superior.
+Bibliotecas:
+Arduino_GFX_Library.
+TAMC_GT911.
+
+
+Archivo: Teclado_tactil_Demo.ino.
+
+Instalación
+
+Configurar Arduino IDE:
+
+Instala Arduino IDE desde arduino.cc.
+Agrega la placa ESP32: en Preferencias, añade https://raw.githubusercontent.com/espressif/arduino-esp32/master/package_esp32_index.json.
+Instala el núcleo ESP32 en Herramientas > Placa > Gestor de Placas.
+
+
+Instalar bibliotecas:
+
+En Herramientas > Gestionar Bibliotecas, instala:
+Arduino_GFX_Library.
+TAMC_GT911.
+
+
+
+
+Descargar el código:
+
+Copia Teclado_tactil_Demo.ino en una carpeta con el mismo nombre.
+
+
+Conectar el hardware:
+
+Conecta la pantalla TFT y el controlador táctil al ESP32 según la tabla de pines.
+Usa un cable USB de calidad (5V, ≥2A).
+
+
+Cargar el código:
+
+Abre Teclado_tactil_Demo.ino en Arduino IDE.
+Selecciona la placa ESP32 y el puerto COM.
+Compila y carga (Ctrl+U).
+
+
+
+Conexiones
+
+
+
+Pin ESP32
+Función
+Conexión en Pantalla
+
+
+
+40
+DE
+Data Enable
+
+
+41
+VSYNC
+Vertical Sync
+
+
+39
+HSYNC
+Horizontal Sync
+
+
+42
+PCLK
+Pixel Clock
+
+
+45,48,47,21,14
+R0-R4
+Rojo (5 bits)
+
+
+5,6,7,15,16,4
+G0-G5
+Verde (6 bits)
+
+
+8,3,46,9,1
+B0-B4
+Azul (5 bits)
+
+
+2
+GFX_BL
+Retroiluminación
+
+
+19
+TOUCH_SDA
+I2C SDA (táctil)
+
+
+20
+TOUCH_SCL
+I2C SCL (táctil)
+
+
+18
+TOUCH_INT
+Interrupción táctil
+
+
+38
+TOUCH_RST
+Reset táctil
+
+
+
+Alimentación: Conecta el ESP32 a un puerto USB (PC o cargador, 5V, ≥2A).
+Nota: Cables largos probados con éxito por 20 minutos.
+
+Uso
+
+Iniciar el proyecto:
+
+Conecta el ESP32 a un puerto USB o cargador.
+La pantalla muestra un teclado virtual de 4x3 teclas.
+
+
+Interacción:
+
+Toca una tecla (por ejemplo, 5): cambia de azul a verde.
+Suelta la tecla: vuelve a azul.
+Prueba múltiples toques (hasta 5) para verificar multitáctil.
+
+
+Monitor serie:
+
+Abre el monitor serie (115200 baudios) para ver las coordenadas táctiles:Touch 0: X=320, Y=240
+
+
+
+
+Pruebas de estabilidad:
+
+Probado por 20 minutos con cable USB largo, sin parpadeo.
+Configuración (pclk = 15 MHz) aplicada al proyecto final.
+
+
+
+Problemas y Soluciones
+
+Problema: Parpadeo aleatorio (rebote) en la pantalla.
+Causa: Frecuencia de píxeles (pclk) alta o fuente inestable.
+Solución:
+Ajustar pclk a 15 MHz (1, 15000000) para estabilidad (~31.4 Hz).
+Usar fuente USB de calidad (≥2A).
+Configurar sincronización: hsync = 0, 8, 4, 8, vsync = 0, 8, 4, 8.
+
+
+
+
+
+Licencia
+Licencia MIT: Este proyecto es de código abierto y puede ser usado o modificado libremente, con atribución al autor.
+Créditos
+
+Autor: [Tu Nombre] (estudiante, proyecto escolar).
+Bibliotecas:
+Arduino_GFX_Library.
+TAMC_GT911.
+
+
+Agradecimientos: A Grok (xAI) por la asistencia en configuración y depuración.
+
