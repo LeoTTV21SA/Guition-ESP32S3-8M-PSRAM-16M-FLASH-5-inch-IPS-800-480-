@@ -5,6 +5,7 @@ Este proyecto escolar implementa un teclado táctil virtual de 4x3 teclas en una
 Descripción
 El proyecto muestra un teclado virtual con teclas numéricas (0-9, *, #) que cambian de color (azul a verde) al ser presionadas. Soporta hasta 5 toques simultáneos gracias al controlador GT911. Fue un paso clave para entender la sincronización de la pantalla (pclk, hsync, vsync) y optimizar la fuente de alimentación, logrando estabilidad en pruebas de 20 minutos con cables USB largos , logrando estabilidad por un dia completo con un cablen USB con una longitud estandar y con el mismo cable se probo la estabilidad por 8h conectado a la computadora durante el tiempo escolar.
 
+
 Características
 
 Teclado virtual: 4 filas x 3 columnas con teclas 1-9, 0, *, #.
@@ -12,6 +13,7 @@ Soporte multitáctil: Detecta hasta 5 toques simultáneos.
 Interfaz gráfica: Teclas rectangulares con esquinas redondeadas, color azul (reposo) y verde (presionado).
 Estabilidad: Sin parpadeo gracias a pclk = 15 MHz y fuente USB estable (≥2A).
 Frecuencia: Actualización táctil cada 40 ms (~25 Hz).
+
 
 Requisitos
 
@@ -22,6 +24,7 @@ Controlador táctil: TAMC_GT911.
 Fuente de alimentación: USB (5V, ≥2A), probado con cables cortos y largos.
 Cables: USB de calidad para minimizar interferencias.
 
+
 Software
 
 Arduino IDE: (Versión 2.3.6).
@@ -31,6 +34,7 @@ TAMC_GT911.
 
 
 Archivo: Teclado_tactil_Demo.ino.
+
 
 Instalación
 
@@ -70,7 +74,6 @@ Compila y carga (Ctrl+U).
 Conexiones
 
 
-
 Pin ESP32
 Función
 Conexión en Pantalla
@@ -99,11 +102,11 @@ Conexión en Pantalla
 
 38 -> TOUCH_RST -> Reset táctil
 
-
 Alimentación: Conecta el ESP32 a un puerto USB (PC o cargador, 5V, ≥2A).
 Nota: Cables largos probados con éxito por 20 minutos. (recordar modificar cuando termine la prueba de cable largo en 2 dias)
 
-Uso
+
+Uso:
 
 Iniciar el proyecto:
 
@@ -111,11 +114,13 @@ Conecta el ESP32 a un puerto USB o cargador.
 La pantalla muestra un teclado virtual de 4x3 teclas.
 
 
+
 Interacción:
 
 Toca una tecla (por ejemplo, 5): cambia de azul a verde.
 Suelta la tecla: vuelve a azul.
 Prueba múltiples toques (hasta 5) para verificar multitáctil.
+
 
 
 Monitor serie:
@@ -130,6 +135,7 @@ Probado por 20 minutos con cable USB largo, sin parpadeo.
 Configuración (pclk = 15 MHz) aplicada al proyecto final.
 
 
+
 Problemas y Soluciones
 
 Problema: Parpadeo aleatorio (rebote) en la pantalla.
@@ -138,6 +144,7 @@ Solución:
 Ajustar pclk a 15 MHz (1, 15000000) para estabilidad (~31.4 Hz).
 Usar fuente USB de calidad (≥2A).
 Configurar sincronización: hsync = 0, 8, 4, 8, vsync = 0, 8, 4, 8.
+
 
 
 Licencia
@@ -157,6 +164,8 @@ Este proyecto escolar implementa un gráfico de líneas simple en una pantalla T
 Descripción
 El proyecto crea un gráfico de líneas con dos series (oscilación en rojo, temperatura en azul) en una pantalla táctil de 800x480. Fue un paso intermedio para entender la integración de LVGL con Arduino_GFX_Library y el controlador táctil GT911, y para probar configuraciones que eliminaron el parpadeo (rebote) en el proyecto final. Estable por 20 minutos con cable USB largo, logrando estabilidad por un dia completo con un cablen USB con una longitud estandar y con el mismo cable se probo la estabilidad por 8h conectado a la computadora durante el tiempo escolar.
 
+
+
 Características
 
 Gráfico de líneas: Dos series (oscilación, temperatura) con 30 puntos visibles.
@@ -164,6 +173,8 @@ Valores simulados: Oscilación (5.00-20.00), temperatura (20.00-30.00) con decim
 Soporte táctil: Detecta toques, aunque no se usa en el gráfico.
 Estabilidad: Sin parpadeo con pclk = 15 MHz y fuente USB estable (≥2A).
 Frecuencia: Loop a ~200 Hz (delay(5)), pantalla a ~31.4 Hz. Si el grafico le parpadea (rebote) tenga en cuenta la opcion de modificar el (delay(5)) a [(delay(16)) o (delay(17))]
+
+
 
 Requisitos
 Hardware
@@ -173,6 +184,8 @@ Pantalla: TFT RGB 800x480 (JC8048W550C_I, controlador probable: ILI9488).
 Controlador táctil: TAMC_GT911.
 Fuente de alimentación: USB (5V, ≥2A), probado con cables cortos y largos (cargador y PC).
 Cables: USB de calidad para minimizar interferencias.
+
+
 
 Software
 
@@ -185,6 +198,7 @@ TAMC_GT911.
 
 Archivo: grafico_lineal_Simple.ino.
 
+
 Instalación
 
 Configurar Arduino IDE:
@@ -194,13 +208,13 @@ Agrega la placa ESP32: en Preferencias, añade https://raw.githubusercontent.com
 Instala el núcleo ESP32 en Herramientas > Placa > Gestor de Placas.
 
 
+
 Instalar bibliotecas:
 
 En Herramientas > Gestionar Bibliotecas, instala:
 Arduino_GFX_Library.
 LVGL (versión 8.3.3).
 TAMC_GT911.
-
 
 Configura lv_conf.h para resolución 800x480 y buffer pequeño.
 
@@ -221,6 +235,7 @@ Cargar el código:
 Abre grafico_lineal_Simple.ino en Arduino IDE.
 Selecciona la placa ESP32 y el puerto COM.
 Compila y carga (Ctrl+U).
+
 
 
 Conexiones
@@ -251,9 +266,10 @@ Pin ESP32 -> Función -> Conexión en Pantalla
 
 38 -> TOUCH_RST -> Reset táctil
 
-
 Alimentación: Conecta el ESP32 a un puerto USB (PC o cargador, 5V, ≥2A).
 Nota: Cables largos probados con éxito por 20 minutos.(en proceso de prueba de 2 dias)
+
+
 
 Uso
 
